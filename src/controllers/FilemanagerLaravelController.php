@@ -3,7 +3,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Pqb\FilemanagerLaravel\FilemanagerLaravel;
+use Asanzred\FilemanagerLaravel\FilemanagerLaravel;
 
 class FilemanagerLaravelController extends Controller {
 	public function __construct(){

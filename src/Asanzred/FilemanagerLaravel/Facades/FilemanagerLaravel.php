@@ -1,4 +1,4 @@
-<?php namespace Pqb\FilemanagerLaravel\Facades;
+<?php namespace Asanzred\FilemanagerLaravel\Facades;
  
 use Illuminate\Support\Facades\Facade;
  

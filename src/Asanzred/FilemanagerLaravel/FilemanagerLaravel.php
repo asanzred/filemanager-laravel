@@ -1,5 +1,5 @@
 <?php
-namespace Pqb\FilemanagerLaravel;
+namespace Asanzred\FilemanagerLaravel;
 class FilemanagerLaravel
 {
 	public static function Filemanager($extraConfig = null){
