@@ -41,7 +41,8 @@ class FilemanagerLaravelServiceProvider extends ServiceProvider {
             __DIR__ . '/../../views' => base_path('resources/views/vendor/filemanager-laravel'),
             __DIR__ . '/../../../public' => base_path('public'),
         ]);
-        $this->loadViewsFrom(__DIR__ . 'resources/views', 'filemanager-laravel');
+        
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'filemanager-laravel');
 	}
 
 	/**
