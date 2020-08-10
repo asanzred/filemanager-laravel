@@ -1,4 +1,4 @@
-<?php namespace Asanzred\FilemanagerLaravel;
+<?php namespace Smallworldfs\FilemanagerLaravel;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +18,7 @@ class FilemanagerLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		// $this->package('Asanzred/FilemanagerLaravel');
+		// $this->package('Smallworldfs/FilemanagerLaravel');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class FilemanagerLaravelServiceProvider extends ServiceProvider {
 		$this->app->booting(function()
 		{
 		  $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-		  $loader->alias('FilemanagerLaravel', 'Asanzred\FilemanagerLaravel\Facades\FilemanagerLaravel');
+		  $loader->alias('FilemanagerLaravel', 'Smallworldfs\FilemanagerLaravel\Facades\FilemanagerLaravel');
 		});
 		$this->publishes([
             __DIR__ . '/../../controllers' => base_path('app/Http/Controllers'),

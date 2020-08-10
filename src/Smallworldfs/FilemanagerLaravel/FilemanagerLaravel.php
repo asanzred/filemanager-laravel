@@ -1,5 +1,5 @@
 <?php
-namespace Asanzred\FilemanagerLaravel;
+namespace Smallworldfs\FilemanagerLaravel;
 class FilemanagerLaravel
 {
 	public static function Filemanager($extraConfig = null){
