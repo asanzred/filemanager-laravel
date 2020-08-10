@@ -1,4 +1,4 @@
-<?php namespace Asanzred\FilemanagerLaravel\Facades;
+<?php namespace Smallworldfs\FilemanagerLaravel\Facades;
  
 use Illuminate\Support\Facades\Facade;
  

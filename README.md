@@ -10,7 +10,7 @@ Basado de https://github.com/pqb/filemanager-laravel
 Edita tu `composer.json`.
 
 	"require": {
-		"asanzred/filemanager-laravel": "1.*"
+		"smallworldfs/filemanager-laravel": "1.*"
 	}
 
 Ejecuta
@@ -19,11 +19,11 @@ Ejecuta
 
 Agrega en tu archivo app.php
 
-	'Asanzred\FilemanagerLaravel\FilemanagerLaravelServiceProvider',
+	'Smallworldfs\FilemanagerLaravel\FilemanagerLaravelServiceProvider',
 
 Y en el Facade
 
-	'FilemanagerLaravel'=> 'Asanzred\FilemanagerLaravel\Facades\FilemanagerLaravel',
+	'FilemanagerLaravel'=> 'Smallworldfs\FilemanagerLaravel\Facades\FilemanagerLaravel',
 
 Copia el Controller, View a la carpeta resources/views/vendor/filemanager-laravel, la carpeta filemanager y tinymce a tu carpeta public, con el siguiente comando:
 	
