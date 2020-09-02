@@ -83,7 +83,7 @@ class FilemanagerProvider extends ServiceProvider
             config('filemanager.middleware_access', null),
             'no-cache'
         ])->domain(config('filemanager.domain',config('app.url')))
-            ->prefix('filemanagerv2')
+            ->prefix(config('filemanager.prefix', 'file-manager'))
             ->namespace('\Smallworldfs\Filemanager\Controllers')
             ->group(__DIR__ . '/../Routes/filemanager.php');
     }

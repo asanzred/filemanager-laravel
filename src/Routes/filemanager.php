@@ -8,7 +8,7 @@ Route::post('connectors', 'FilemanagerController@postConnectors')->name('fileman
 
 Route::fallback(function(Request $request) {
     $file = config('filemanager_path') . $request->path();
-    $file = str_replace('filemanagerv2', 'filemanager', $file);
+    $file = str_replace(config('filemanager.prefix'), 'filemanager', $file);
 
     if(! file_exists($file))
         abort(404);
