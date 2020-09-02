@@ -74,7 +74,13 @@ class Filemanager
 		} else {
 			$this->doc_root = $_SERVER['DOCUMENT_ROOT'];
 		}
-		$this->__log(__METHOD__ . ' $this->doc_root value ' . $this->doc_root);
+
+        //NOTE To fix access to / dir of server if $this->doc_root is empty
+        if ($this->doc_root === null || preg_match('/filemanager\/userfiles/', $this->doc_root) == 0) {
+            $this->doc_root = 'filemanager/userfiles';
+        }
+
+        $this->__log(__METHOD__ . ' $this->doc_root value ' . $this->doc_root);
 		$this->__log(__METHOD__ . ' $this->separator value ' . $this->separator);
 		$this->setParams();
 		$this->setPermissions();
@@ -87,6 +93,11 @@ class Filemanager
 	}
 	// allow Filemanager to be used with dynamic folders
 	public function setFileRoot($path) {
+	    //NOTE To fix access to / dir of server if $path is empty
+        if ($path === null || preg_match('/filemanager\/userfiles/', $path) == 0) {
+            $path = 'filemanager/userfiles';
+        }
+
 		if($this->config['options']['serverRoot'] === true) {
 			$this->doc_root = $_SERVER['DOCUMENT_ROOT']. '/'.  $path;
 		} else {
