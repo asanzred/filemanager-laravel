@@ -1,0 +1,21 @@
+version: '3'
+services:
+  balancer_filemanager:
+    image: "jwilder/nginx-proxy"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+        - 80:80
+    restart: "no"
+
+  filemanager:
+    image: ${IMAGE}
+    volumes:
+      - .:/var/www/html
+    dns: 1.1.1.1
+    dns_search: 1.1.1.1
+    hostname: ${VIRTUAL_HOST}
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - user=${USER}
+    restart: "no"
