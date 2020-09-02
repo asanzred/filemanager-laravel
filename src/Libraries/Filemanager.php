@@ -753,6 +753,12 @@ class Filemanager
     {
         if ($path == '') {
             if (isset($this->get['path'])) $path = $this->get['path'];
+            $path = str_replace('/filemanager/userfiles/'.$this->separator, '', $path); //FIXME
+            $path = '/filemanager/userfiles/'.$this->separator . $path;
+            //dd($this->get['path'], $path);
+        } else {
+            $path = str_replace('/filemanager/userfiles/'.$this->separator, '', $path); //FIXME
+            $path = '/filemanager/userfiles/'.$this->separator . $path;
         }
         if ($this->config['options']['fileRoot'] !== false) {
             $full_path = $this->doc_root . rawurldecode(str_replace($this->doc_root, '', $path));
@@ -760,7 +766,8 @@ class Filemanager
                 $full_path = $this->doc_root . rawurldecode(str_replace($this->dynamic_fileroot, '', $path));
             }
         } else {
-            $full_path = $this->doc_root . rawurldecode($path);
+            $full_path = public_path(rawurldecode($path));
+            //dd($full_path);
         }
         $full_path = str_replace("//", "/", $full_path);
         $this->__log(" returned path : " . $full_path);
