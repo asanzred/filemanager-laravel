@@ -66,7 +66,7 @@ class FilemanagerProvider extends ServiceProvider
                 return false;
 
             if($user->hasRole('hr')) {
-                session()->put('filemanager_path', 'filemanager/userfiles/hr');
+                session()->put('filemanager_path', '/hr/');
             }
 
             return true;
