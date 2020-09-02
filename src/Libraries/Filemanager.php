@@ -770,6 +770,14 @@ class Filemanager
             //dd($full_path);
         }
         $full_path = str_replace("//", "/", $full_path);
+
+        // CHECK PERMISSIONS FROM USER ROLE
+        $user_path = str_replace('/', '\/', session('filemanager_path'));
+        preg_match('/'.$user_path.'/', $full_path, $found);
+        if(count($found) == 0) {
+            abort(403);
+        }
+
         $this->__log(" returned path : " . $full_path);
         return $full_path;
     }
