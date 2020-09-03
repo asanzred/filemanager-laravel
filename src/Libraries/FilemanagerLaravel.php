@@ -12,7 +12,7 @@ class FilemanagerLaravel
             $extraConfig = null;
             $f           = new Filemanager($extraConfig);
             $f->connector_url = route('filemanager.get.connector');
-            $f->setFileRoot($folder);
+            //$f->setFileRoot($folder);
             $f->run();
         } catch (Exception $e) {
             if(config('app.debug')) {

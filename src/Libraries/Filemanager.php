@@ -79,12 +79,6 @@ class Filemanager
         } else {
             $this->doc_root = $_SERVER['DOCUMENT_ROOT'];
         }
-
-        //NOTE To fix access to / dir of server if $this->doc_root is empty
-        if ($this->doc_root === null || preg_match('/filemanager\/userfiles/', $this->doc_root) == 0) {
-            $this->doc_root = 'filemanager/userfiles';
-        }
-
         $this->__log(__METHOD__ . ' $this->doc_root value ' . $this->doc_root);
         $this->__log(__METHOD__ . ' $this->separator value ' . $this->separator);
         $this->setParams();
@@ -102,11 +96,6 @@ class Filemanager
     // allow Filemanager to be used with dynamic folders
     public function setFileRoot($path)
     {
-        //NOTE To fix access to / dir of server if $path is empty
-        if ($path === null || preg_match('/filemanager\/userfiles/', $path) == 0) {
-            $path = 'filemanager/userfiles';
-        }
-
         if ($this->config['options']['serverRoot'] === true) {
             $this->doc_root = $_SERVER['DOCUMENT_ROOT'] . '/' . $path;
         } else {
@@ -753,12 +742,6 @@ class Filemanager
     {
         if ($path == '') {
             if (isset($this->get['path'])) $path = $this->get['path'];
-            $path = str_replace('/filemanager/userfiles/'.$this->separator, '', $path); //FIXME
-            $path = '/filemanager/userfiles/'.$this->separator . $path;
-            //dd($this->get['path'], $path);
-        } else {
-            $path = str_replace('/filemanager/userfiles/'.$this->separator, '', $path); //FIXME
-            $path = '/filemanager/userfiles/'.$this->separator . $path;
         }
         if ($this->config['options']['fileRoot'] !== false) {
             $full_path = $this->doc_root . rawurldecode(str_replace($this->doc_root, '', $path));
@@ -766,8 +749,7 @@ class Filemanager
                 $full_path = $this->doc_root . rawurldecode(str_replace($this->dynamic_fileroot, '', $path));
             }
         } else {
-            $full_path = public_path(rawurldecode($path));
-            //dd($full_path);
+            $full_path = $this->doc_root . rawurldecode($path);
         }
         $full_path = str_replace("//", "/", $full_path);
 
