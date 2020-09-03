@@ -1,6 +1,6 @@
 <?php
 
-//AccessRoles => 'can:access-filemanager,\oneRole,otherRole,anotherRole'
+//AccessRoles => 'can:access-filemanager,\oneRole|otherRole|anotherRole'
 
 return [
     'domain'            => 'your.domain.com',
