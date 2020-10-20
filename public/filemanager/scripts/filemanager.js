@@ -1470,7 +1470,9 @@ $(function(){
 	}
 
 	if(!config.options.fileRoot) {
-		fileRoot = '/' + document.location.pathname.substring(1, document.location.pathname.lastIndexOf('/') + 1) + 'userfiles/';
+		fileRoot = $('#uploader').data('dir');
+		//NOTE feature/WEBV3-634 - ROLES - LOAD BY BACKEND
+		// fileRoot = '/' + document.location.pathname.substring(1, document.location.pathname.lastIndexOf('/') + 1) + 'userfiles/';
 	} else {
 		if(!config.options.serverRoot) {
 			fileRoot = config.options.fileRoot;
