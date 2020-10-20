@@ -1,98 +1,127 @@
-#Filemanager para Laravel 5.6
-Basado de https://github.com/pqb/filemanager-laravel
+# FileManager for Laravel
 
-## Requiere
+This package is based on: http://github.com/simogeo/Filemanager.git , and we have made modifications to encapsulate it, to get a single installable in our projects.
 
-"intervention/image": "^2.4"
+Once you have installed this package, you will have also all dependencies necessaries to work.
 
-## Instalación
+## Instalation
 
-Edita tu `composer.json`.
-
-	"require": {
-		"smallworldfs/filemanager-laravel": "1.*"
-	}
-
-Ejecuta
-
-	composer update
-
-Agrega en tu archivo app.php
-
-	'Smallworldfs\FilemanagerLaravel\FilemanagerLaravelServiceProvider',
-
-Y en el Facade
-
-	'FilemanagerLaravel'=> 'Smallworldfs\FilemanagerLaravel\Facades\FilemanagerLaravel',
-
-Copia el Controller, View a la carpeta resources/views/vendor/filemanager-laravel, la carpeta filemanager y tinymce a tu carpeta public, con el siguiente comando:
-	
-	php artisan vendor:publish
-
-Al final Agrega en routes.php
-
-	Route::group(['prefix' => 'filemanager','middleware' => 'auth'], function() {    
-	    Route::get('show', 'FilemanagerLaravelController@getShow');
-	    Route::get('connectors', 'FilemanagerLaravelController@getConnectors');
-	    Route::post('connectors', 'FilemanagerLaravelController@postConnectors');
-	});
-
-
-Para que carge tinymce con el plugin filemanager agrega:
-
-```
-<script type="text/javascript" src="{{ url('') }}/tinymce/tinymce.min.js"></script>
-<script type="text/javascript" src="{{ url('') }}/tinymce/tinymce_editor.js"></script>
-<script type="text/javascript">
-editor_config.selector = "textarea";
-editor_config.path_absolute = "http://laravel-filemanager.example.com/";
-tinymce.init(editor_config);
-</script>
+If you have composer installed globally, your need run:
+```shell
+composer install "smallworldfs/filemanager-laravel"
 ```
 
-## Si deseas poner en una sub carpeta
-Ejemplo http://localhost/admin/filemanager/
-
-Modifica tu routes.php
-```
-Route::group(array('middleware' => 'auth'), function(){    
-    Route::get('admin/filemanager/show', 'FilemanagerLaravelController@getShow');
-    Route::get('admin/filemanager/connectors', 'FilemanagerLaravelController@getConnectors');
-    Route::post('admin/filemanager/connectors', 'FilemanagerLaravelController@postConnectors');
-});
-```
-Modifica tu controller
-```
-// app/Http/Controllers/FilemanagerLaravelController.php
-public function getConnectors()
-	{
-		$extraConfig = array('dir_filemanager'=>'/admin');
-		$f = FilemanagerLaravel::Filemanager($extraConfig);
-		$f->connector_url = url('/').'/admin/filemanager/connectors';
-		$f->run();
-	}
-	public function postConnectors()
-	{
-		$extraConfig = array('dir_filemanager'=>'/admin');
-		$f = FilemanagerLaravel::Filemanager($extraConfig);
-		$f->connector_url = url('/').'/admin/filemanager/connectors';
-		$f->run();
-	}
+Otherwise, you must have a composer.phar file in your base dir of your project to run:
+```shell
+php composer.phar install "smallworldfs/filemanager-laravel"
 ```
 
-Modifica todos los enlaces agregando el nombre de tu carpeta
-```	
-// resources/views/vendor/filemanager-laravel/filemanager/index.blade.php
-<link rel="stylesheet" type="text/css" href="{{ url('') }}/admin/filemanager/styles/filemanager.css" />
+## Configuration
+
+This package, auto load/register "Gates Policies" and "Routes" and you not need anything to work in your project.
+
+But... you must configure the config vars to work succesfully and customizing with your environment.
+
+Running this command, the package copy (filemanager.php base config file) to laravel config dir, and you can edit this file.
+```shell
+php artisan vendor:publish --package=smallworldfs/filemanager-laravel
 ```
 
-Cambia la url absoluta:
-```
-<script type="text/javascript">
-editor_config.selector = "textarea";
-editor_config.path_absolute = "http://laravel-filemanager.example.com/admin/";
->>>>>>> develop
-tinymce.init(editor_config);
-</script>
+*Only one file, it's great!!*
+
+### FileManager Config File
+
+This is the config file, you can see a comment with an example of roles to limit user access to the filemanager.
+
+The uncommented attributes are basic customization settings:
+- domain: Configure with your ADM domain access
+- prefix: Change the path of url, to access filemanager
+
+```php
+<?php
+
+return [
+    'domain'            => 'your.domain.com',
+    'prefix'            => 'file-manager',
+    'public_path'       => '/filemanager/',
+    // Activate if you need authentication to access filemanager
+    //'middleware_auth'   => 'auth',
+    // Activate also, if you need limit user access with roles
+    //      AccessRoles Example => 'can:access-filemanager,\admin|oneRole|otherRole|anotherRole'
+    //'middleware_access' => 'can:access-filemanager,\oneRole',
+    // Configure to work with middleware_access, permit access to the first role of user
+    //'roles_path'        => [
+    //    //'admin'       => '/filemanager/', Equals that public_path is the base dir to other roles
+    //    'oneRole'       => '/filemanager/oneRole',
+    //    'otherRole'     => '/filemanager/otherRole',
+    //    'anotherRole'   => '/filemanager/anotherRole',
+    //],
+];
 ```
 
+To work with roles, you need create a roles table in your database with the next structure:
+
+```
+UserTable
+ - id
+ - name
+ - email
+ - ... (another fileds you need)
+RolesTable
+ - id
+ - name*
+ - ... (another fileds you need)
+
+UserRolesTable
+ - id
+ - user_id
+ - role_id
+
+
+* (role_name is necessary for limit access in the filemanager config file)
+```
+
+Then, you can access to the user role with Eloquent relations on the model:
+
+```php
+> UserModel::class
+
+public function roles()
+{
+    return $this->belongsToMany(RoleModel::class);
+}
+
+public function hasAnyRole(array $roles)
+{
+    return null !== $this->roles()->whereIn('name', $roles)->first();
+}
+
+public function hasRole($role)
+{
+    return null !== $this->roles()->where('name', $role)->first();
+}
+
+> RoleModel::class
+
+public function users()
+{
+  return $this->belongsToMany(UserModel::class);
+}
+```
+
+And to activate user access, you need configure the middleware attributes of the config file:
+
+```php
+'middleware_access' => 'can:access-filemanager,\oneRole|otherRole|anotherRole',
+'roles_path'        => [
+    'admin'         => '/filemanager/', // base dir of admin
+    'oneRole'       => '/filemanager/oneRole',
+    'otherRole'     => '/filemanager/otherRole',
+    'anotherRole'   => '/filemanager/anotherRole',
+],
+```
+
+**Note1: If you only need one user access, create only admin role**
+**Note2: If an user have multiple roles, only work's with first user role**
+**Note3: If you not specify public_path, it will use /filemanager/**
+**Note4: If you not specify roles_path, it will use public_path**

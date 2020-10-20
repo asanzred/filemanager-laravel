@@ -16,7 +16,7 @@
 </head>
 <body>
 <div>
-    <form id="uploader" method="post" data-dir="{{ session('filemanager_path') }}">
+    <form id="uploader" method="post" data-dir="{{ session('filemanager.public_path') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <button id="home" name="home" type="button" value="Home">&nbsp;</button>
         <h1></h1>
