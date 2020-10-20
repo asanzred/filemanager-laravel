@@ -7,7 +7,7 @@ Route::get('connectors',  'FilemanagerController@getConnectors')->name('filemana
 Route::post('connectors', 'FilemanagerController@postConnectors')->name('filemanager.post.connector');
 
 Route::fallback(function(Request $request) {
-    $file = config('filemanager_path') . $request->path();
+    $file = config('filemanager.base_path') . $request->path();
     $file = str_replace(config('filemanager.prefix'), 'filemanager', $file);
 
     if(! file_exists($file))

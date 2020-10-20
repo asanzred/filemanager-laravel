@@ -36,10 +36,10 @@ class Filemanager
             $this->dir_separate_real = $this->dir_filemanager . '/filemanager';
         }
         // getting default config file
-        $content        = file_get_contents(config('filemanager_path') . $this->dir_separate_real . "/scripts/filemanager.config.js.default");
+        $content        = file_get_contents(config('filemanager.base_path') . $this->dir_separate_real . "/scripts/filemanager.config.js.default");
         $config_default = json_decode($content, true);
         // getting user config file
-        $content      = file_get_contents(config('filemanager_path') . $this->dir_separate_real . "/scripts/filemanager.config.js");
+        $content      = file_get_contents(config('filemanager.base_path') . $this->dir_separate_real . "/scripts/filemanager.config.js");
         $config       = json_decode($content, true);
         $this->config = array_replace_recursive($config_default, $config);
         // override config options if needed
@@ -47,7 +47,7 @@ class Filemanager
             $this->setup($extraConfig);
         }
         // $this->root = dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR;
-        $this->root = config('filemanager_path') . DIRECTORY_SEPARATOR;
+        $this->root = config('filemanager.base_path') . DIRECTORY_SEPARATOR;
         if ($this->dir_filemanager != "")
             $this->root .= $this->dir_filemanager . '/';
         // var_dump($this->root);
@@ -754,7 +754,7 @@ class Filemanager
         $full_path = str_replace("//", "/", $full_path);
 
         // CHECK PERMISSIONS FROM USER ROLE
-        $user_path = str_replace('/', '\/', session('filemanager_path'));
+        $user_path = str_replace('/', '\/', session('filemanager.public_path'));
         preg_match('/'.$user_path.'/', $full_path, $found);
         if(count($found) == 0) {
             abort(403);
@@ -1225,5 +1225,13 @@ class Filemanager
         }
         echo json_encode($response);
         die();
+    }
+
+    public static function render(string $folder) {
+        $extraConfig = null;
+        $f           = new self($extraConfig);
+        $f->connector_url = route('filemanager.get.connector');
+        //$f->setFileRoot($folder);
+        $f->run();
     }
 }
