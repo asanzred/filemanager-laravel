@@ -8,12 +8,12 @@ Once you have installed this package, you will have also all dependencies necess
 
 If you have composer installed globally, your need run:
 ```shell
-composer install "smallworldfs/filemanager-laravel"
+composer require "smallworldfs/filemanager-laravel"
 ```
 
 Otherwise, you must have a composer.phar file in your base dir of your project to run:
 ```shell
-php composer.phar install "smallworldfs/filemanager-laravel"
+php composer.phar require "smallworldfs/filemanager-laravel"
 ```
 
 ## Configuration
@@ -122,6 +122,9 @@ And to activate user access, you need configure the middleware attributes of the
 ```
 
 **Note1: If you only need one user access, create only admin role**
+
 **Note2: If an user have multiple roles, only work's with first user role**
+
 **Note3: If you not specify public_path, it will use /filemanager/**
+
 **Note4: If you not specify roles_path, it will use public_path**
