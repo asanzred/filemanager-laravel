@@ -2,8 +2,9 @@
 
 namespace Smallworldfs\Filemanager\Controllers;
 
+use Exception;
 use Illuminate\Routing\Controller;
-use Smallworldfs\Filemanager\Libraries\FilemanagerLaravel;
+use Smallworldfs\Filemanager\Libraries\Filemanager;
 
 class FilemanagerController extends Controller
 {
@@ -20,11 +21,27 @@ class FilemanagerController extends Controller
 
     public function getConnectors()
     {
-        FilemanagerLaravel::render(session('filemanager_path'));
+        try {
+            Filemanager::render(session('filemanager.public_path'));
+        } catch (Exception $e) {
+            if(config('app.debug')) {
+                dd($e);
+            }
+
+            return abort(500);
+        }
     }
 
     public function postConnectors()
     {
-        FilemanagerLaravel::render(session('filemanager_path'));
+        try {
+            Filemanager::render(session('filemanager.public_path'));
+        } catch (Exception $e) {
+            if(config('app.debug')) {
+                dd($e);
+            }
+
+            return abort(500);
+        }
     }
 }

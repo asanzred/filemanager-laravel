@@ -9,6 +9,7 @@ use Smallworldfs\Filemanager\Contracts\UserFilemanager;
 
 class FilemanagerProvider extends ServiceProvider
 {
+    const FILEMANAGER_PUBLIC = '/filemanager/userfiles/';
     /**
      * Bootstrap the application services.
      *
@@ -49,7 +50,7 @@ class FilemanagerProvider extends ServiceProvider
             __DIR__ . '/../Config/filemanager.php' => config_path('filemanager.php')
         ]);
 
-        config()->set(['filemanager_path' => base_path('vendor/smallworldfs/filemanager/public/')]);
+        config()->set(['filemanager.base_path' => base_path('vendor/smallworldfs/filemanager-laravel/public/')]);
     }
 
     /**
@@ -65,11 +66,13 @@ class FilemanagerProvider extends ServiceProvider
             if(! $user->hasAnyRole($roles))
                 return false;
 
-            if($user->hasRole('hr')) {
-                session()->put('filemanager_path', '/filemanager/userfiles/hr/');
-            } else {
-                session()->put('filemanager_path', '/filemanager/userfiles/');
+            if($user->hasRole('admin')) {
+                session()->put('filemanager.public_path', config('filemanager.public_path', self::FILEMANAGER_PUBLIC));
+                return true;
             }
+
+            $roleFirst = $user->roles->first();
+            session()->put('filemanager.public_path', config('filemanager.roles_path.'.$roleFirst->name));
 
             return true;
         });
