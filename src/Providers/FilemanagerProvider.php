@@ -50,7 +50,7 @@ class FilemanagerProvider extends ServiceProvider
             __DIR__ . '/../Config/filemanager.php' => config_path('filemanager.php')
         ]);
 
-        config()->set(['filemanager.base_path' => base_path('vendor/smallworldfs/filemanager/public/')]);
+        config()->set(['filemanager.base_path' => base_path('vendor/smallworldfs/filemanager-laravel/public/')]);
     }
 
     /**
