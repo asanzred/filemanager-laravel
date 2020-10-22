@@ -10,7 +10,7 @@ class FilemanagerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(config('filemanager.middleware_auth', 'auth'));
+        $this->middleware(config('filemanager.middlewares', ['web']));
         $this->middleware(config('filemanager.middleware_access', null));
     }
 

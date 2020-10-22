@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.0] - MULTI MIDDLEWARE VERSION - 2020-10-22
+### Change
+    - New config file
+    - Modify FilemanagerProvider
+
 ## [2.0.1] - STABLE VERSION - 2020-10-22
 ### Change
     - Bugfix absolute vendor folder
