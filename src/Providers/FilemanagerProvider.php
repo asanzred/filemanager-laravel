@@ -19,6 +19,10 @@ class FilemanagerProvider extends ServiceProvider
     {
         //$this->loadViewsFrom(base_path('vendor/smallworldfs/filemanager-laravel/src/Views'), 'filemanager');
         $this->loadViewsFrom(__DIR__ . '/../Views', 'filemanager');
+
+        if(! config('filemanager.middleware_access')) {
+            session()->put('filemanager.public_path', config('filemanager.public_path', self::FILEMANAGER_PUBLIC));
+        }
     }
 
     /**
@@ -83,11 +87,7 @@ class FilemanagerProvider extends ServiceProvider
      * @return void
      */
     public function registerRoutes() {
-        Route::middleware([
-            config('filemanager.middleware_auth', 'auth'),
-            config('filemanager.middleware_access', null),
-            'no-cache'
-        ])->domain(config('filemanager.domain',config('app.url')))
+        Route::middleware(config('filemanager.middlewares', ['web']))->domain(config('filemanager.domain',config('app.url')))
             ->prefix(config('filemanager.prefix', 'file-manager'))
             ->namespace('\Smallworldfs\Filemanager\Controllers')
             ->group(__DIR__ . '/../Routes/filemanager.php');
