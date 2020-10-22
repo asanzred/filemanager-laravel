@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.0.1] - STABLE VERSION - 2020-10-22
+### Change
+    - Bugfix absolute vendor folder
+
 ## [2.0.0]   - first stable version - 2020-09-10
 ### Change
     - Move old code to src/_old folder
