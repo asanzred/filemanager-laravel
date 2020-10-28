@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [2.1.2] - FIX COMPOSER.JSON STRUCTURE FOR PACKAGIST - 2020-11-25
+### Change
+    - Modify composer.json
+
 ## [2.1.1] - AVAILABLE CACHE ROUTES VERSION - 2020-10-28
 ### Change
     - Modify routes
